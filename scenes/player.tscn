@@ -1,7 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://cvop7qax36tps"]
+[gd_scene load_steps=11 format=3 uid="uid://cvop7qax36tps"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_iymdt"]
 [ext_resource type="Texture2D" uid="uid://dcornjh871u2x" path="res://assets/brackeys_platformer_assets/sprites/knight.png" id="1_qfq5o"]
+[ext_resource type="AudioStream" uid="uid://ctf3cjt1ehqnu" path="res://assets/brackeys_platformer_assets/music/time_for_adventure.mp3" id="3_hp5rj"]
+[ext_resource type="AudioStream" uid="uid://b67bnfq2nbwnr" path="res://assets/brackeys_platformer_assets/sounds/jump.wav" id="4_enril"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_22aae"]
 atlas = ExtResource("1_qfq5o")
@@ -40,7 +42,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1ougs"]
-radius = 11.0454
+radius = 6.675
 
 [node name="Player" type="CharacterBody2D"]
 scale = Vector2(3, 3)
@@ -53,6 +55,14 @@ animation = &"idle"
 frame_progress = 0.165693
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 5.33333)
 shape = SubResource("CircleShape2D_1ougs")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_hp5rj")
+autoplay = true
+
+[node name="JumpPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_enril")
