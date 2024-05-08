@@ -14,7 +14,6 @@ var health = 100
 @onready var animated_sprite_2d = $PlayerAnimator
 
 func _physics_process(delta):
-	$ProgressBar.set_value(health) 
 	# Handle animation.
 	if hurt == false && hop == false && death == false:
 		if (velocity.x > 1 || velocity.x < -1):
