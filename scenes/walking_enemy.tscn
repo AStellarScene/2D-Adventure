@@ -173,7 +173,7 @@ animation = &"attack"
 autoplay = "idle"
 frame_progress = 0.457693
 
-[node name="Head Hit" type="Area2D" parent="." groups=["enemy_attack"]]
+[node name="Head Hit" type="Area2D" parent="." groups=["enemy"]]
 collision_layer = 15
 collision_mask = 4
 

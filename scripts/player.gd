@@ -14,7 +14,9 @@ var health = 100
 @onready var animated_sprite_2d = $PlayerAnimator
 
 func _physics_process(delta):
-	# Handle animation.
+	var isLeft = velocity.x < 0
+	animated_sprite_2d.flip_h = isLeft
+	# Animator
 	if hurt == false && hop == false && death == false:
 		if (velocity.x > 1 || velocity.x < -1):
 			if is_on_floor():
@@ -24,15 +26,15 @@ func _physics_process(delta):
 		else:
 			animated_sprite_2d.animation = "idle"
 
-	# Add the gravity.
+	# Gravity & Physics Process
 	if not is_on_floor():
 		velocity.y += gravity * delta
 
-	# Handle jump.
+	# Handle jump input.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
-# Get the input direction and handle the movement/deceleration.
+# Apply input direction and apply knock-back.
 	var direction = Input.get_axis("ui_left", "ui_right")
 	if direction:
 		velocity.x = direction * SPEED
@@ -40,11 +42,19 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		
 	if hurt == true:
-		velocity.x = -300
+		velocity.x = -600
+		velocity.y = -30
 
 	move_and_slide()
 
-	var isLeft = velocity.x < 0
-	animated_sprite_2d.flip_h = isLeft
-	
-# Reset player if out of bounds.
+# Start knockback when hit by an enemy.
+func _on_hurt_area_area_entered(area):
+	if area.is_in_group("enemy"):
+		print("Hurt!")
+		hurt = true
+		$"Hurt Area/Hurt Timer".start()
+
+# Stop knockback after timer ends.
+func _on_hurt_timer_timeout():
+	$"Hurt Area/Hurt Timer".stop()
+	hurt = false
